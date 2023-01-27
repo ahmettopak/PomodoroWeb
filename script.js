@@ -26,15 +26,16 @@ var pomodoro = {
     // Countdown
     this.countdownDisplay = document.getElementById("countdown");
     this.typeDisplay = document.getElementById("type");
-    this.resetCountdownBtn = document.getElementById("reset-session");
+    //this.resetCountdownBtn = document.getElementById("reset-session");
     this.stopCountdownBtn = document.getElementById("stop-session");
     this.startCountdownBtn = document.getElementById("start-session");
     this.countdownContainer = document.getElementById("countdown-container");
+    startCountdownText = document.getElementById("start-session");
   },
   timerVariables: function () {
 
     // Initial Length values
-    this.sessionLength = 20;
+    this.sessionLength = 25;
     this.breakLength = 5;
 
     // Define the variable that includes the setinterval method
@@ -57,7 +58,7 @@ var pomodoro = {
 
     // Bind start date to #countdown and countdown buttons
     this.countdownDisplay.onclick = pomodoro.startCountdown;
-    this.resetCountdownBtn.onclick = pomodoro.resetCountdown;
+    //this.resetCountdownBtn.onclick = pomodoro.resetCountdown;
     this.stopCountdownBtn.onclick = pomodoro.stopCountdown;
     this.startCountdownBtn.onclick = pomodoro.startCountdown;
 
@@ -115,7 +116,7 @@ var pomodoro = {
   },
   // Reset variables to initial values
   resetVariables: function () {
-
+    document.getElementById("start-session").innerHTML = "START";
     pomodoro.timeinterval = false;
     pomodoro.workSession = true;
     pomodoro.pausedTime = 0;
@@ -133,17 +134,21 @@ var pomodoro = {
     // countdown
     if (pomodoro.timeinterval !== false) {
       pomodoro.pauseCountdown();
+      document.getElementById("start-session").innerHTML = "START";
     } else {
       // Set start and end time with system time and convert to 
       // miliseconds to correctly meassure time ellapsed
       pomodoro.startTime = new Date().getTime();
+      document.getElementById("start-session").innerHTML = "PAUSE";
 
       // Check if pomodoro has just been unpaused
       if (pomodoro.timePaused === false) {
         pomodoro.unPauseCountdown();
+
       } else {
         pomodoro.endTime = pomodoro.startTime + pomodoro.pausedTime;
         pomodoro.timePaused = false;
+
       }
 
       // Run updateCountdown every 990ms to avoid lag with 1000ms,
@@ -165,7 +170,7 @@ var pomodoro = {
     var minutes = Math.floor(difference / 1000 / 60 % 60);
 
     // Add 0 to seconds if less than ten
-    if (seconds < 10) {seconds = "0" + seconds;}
+    if (seconds < 10) { seconds = "0" + seconds; }
 
     // Display remaining minutes and seconds, unless there is less than 1 second
     // left on timer. Then change to next session.
@@ -224,9 +229,6 @@ var pomodoro = {
     clearInterval(pomodoro.timeinterval);
     pomodoro.resetVariables();
 
-    // Restart variables
-    pomodoro.startCountdown();
-
   },
   stopCountdown: function () {
 
@@ -278,7 +280,8 @@ var pomodoro = {
       pomodoro.toggleTimerBtns[i].removeAttribute("title");
     }
 
-  } };
+  }
+};
 
 
 // Initialise on page load
