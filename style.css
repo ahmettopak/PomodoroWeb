@@ -134,6 +134,8 @@ header {
 } */
 
 body {
+  min-width: 400px;
+  min-height: 200px;
   font: 20px "work sans", sans-serif;
   color: #E900FF;
   background: #000000;
